@@ -341,6 +341,8 @@ declare panel: {
 --   function onFrameTick(deltaMs) end           -- continuous animation (setNeedsFrameTick)
 --   function onAudioSpectrum(valuesCsv, stateCsv) end -- audio-reactive bar widget
 --   function onOpen(context) / onClose() end    -- panel lifecycle
+--   function onKey(chord, pressed) end          -- panel: a capture_keys chord, verbatim from the
+--                                               -- manifest; pressed is true on press, false on release
 --   function onConfigChanged() end              -- service: plugin settings changed; getConfig() now returns new values
 --   function onExit(signal) end                  -- any entry teardown (0 normally, 2 for SIGINT, 15 for SIGTERM)
 --
