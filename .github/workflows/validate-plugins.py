@@ -111,6 +111,7 @@ ENTRY_TYPES = ("widget", "panel", "shortcut", "desktop_widget", "launcher_provid
 SETTING_OWNER_TYPES = ("widget", "panel", "desktop_widget", "launcher_provider")
 SETTING_TYPES = {"string", "string_list", "bool", "glyph", "select", "folder", "file", "int", "color"}
 PANEL_PLACEMENTS = {"attached", "floating"}
+PANEL_KEYBOARD_FOCUS = {"on_demand", "exclusive", "none"}
 PANEL_POSITIONS = {
     "auto",
     "center",
@@ -133,7 +134,18 @@ BASE_ENTRY_FIELDS = {"id", "entry"}
 ENTRY_FIELDS = {
     "widget": BASE_ENTRY_FIELDS | {"setting"},
     "panel": BASE_ENTRY_FIELDS
-    | {"setting", "width", "height", "placement", "position", "open_near_click", "dismiss_on_outside_click"},
+    | {
+        "setting",
+        "width",
+        "height",
+        "placement",
+        "position",
+        "open_near_click",
+        "dismiss_on_outside_click",
+        "keyboard_focus",
+        "persistent",
+        "capture_keys",
+    },
     "desktop_widget": BASE_ENTRY_FIELDS | {"setting"},
     "service": BASE_ENTRY_FIELDS,
     "shortcut": BASE_ENTRY_FIELDS,
@@ -742,6 +754,29 @@ class Validator:
                 )
             elif not isinstance(entry["dismiss_on_outside_click"], bool):
                 self.add_context_error(manifest_path, context, "dismiss_on_outside_click must be a bool")
+
+        if "keyboard_focus" in entry:
+            if not is_int(plugin_api) or plugin_api < 10:
+                self.add_context_error(manifest_path, context, "keyboard_focus requires plugin_api >= 10")
+            elif entry["keyboard_focus"] not in PANEL_KEYBOARD_FOCUS:
+                valid = ", ".join(sorted(PANEL_KEYBOARD_FOCUS))
+                self.add_context_error(manifest_path, context, f"keyboard_focus must be one of: {valid}")
+
+        if "persistent" in entry:
+            if not is_int(plugin_api) or plugin_api < 11:
+                self.add_context_error(manifest_path, context, "persistent requires plugin_api >= 11")
+            elif not isinstance(entry["persistent"], bool):
+                self.add_context_error(manifest_path, context, "persistent must be a bool")
+
+        if "capture_keys" in entry:
+            if not is_int(plugin_api) or plugin_api < 13:
+                self.add_context_error(manifest_path, context, "capture_keys requires plugin_api >= 13")
+            elif not isinstance(entry["capture_keys"], list) or not all(
+                is_non_empty_string(chord) for chord in entry["capture_keys"]
+            ):
+                self.add_context_error(
+                    manifest_path, context, "capture_keys must be an array of key chord strings"
+                )
 
     def validate_entries(
         self,
