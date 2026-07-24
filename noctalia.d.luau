@@ -95,6 +95,16 @@ export type NoctaliaString = {
   urlDecode: (s: string) -> string,
 }
 
+export type SystemStats = {
+  -- Absent sensors are nil rather than 0, so "no probe" is distinguishable from "idle".
+  cpu: { usagePercent: number, tempC: number? },
+  ram: { usagePercent: number, usedMb: number, totalMb: number },
+  swap: { usedMb: number, totalMb: number },
+  gpu: { tempC: number?, usagePercent: number?, vramUsedBytes: number?, vramTotalBytes: number? },
+  net: { rxBytesPerSec: number, txBytesPerSec: number },
+  loadAvg: { number }, -- 1, 5 and 15 minute averages
+}
+
 export type Noctalia = {
   log: (msg: string) -> (),
 
@@ -144,6 +154,18 @@ export type Noctalia = {
   getenv: (name: string) -> string?,
   expandPath: (path: string) -> string,
   formatTime: (pattern: string, unixSeconds: number?) -> string,
+  -- Wall-clock milliseconds since the Unix epoch. formatTime and os.time are both
+  -- whole-second, so this is the only sub-second clock. Plugin API 12.
+  nowMs: () -> number,
+
+  -- System monitor. Both return nil when [system.monitor] is disabled. Plugin API 12.
+  -- systemStats reads a snapshot and enables nothing on its own.
+  systemStats: () -> SystemStats?,
+  -- Per-core usage in /proc/stat order, nil until the first delta lands (up to a second
+  -- after the first call). The first call opts this plugin into per-core sampling, which
+  -- costs one extra /proc/stat read per second while it stays loaded. Offline cores are
+  -- absent from /proc/stat, so the length can change and an index is not a core id.
+  cpuCores: () -> { number }?,
 
   -- Tick rate: how often update() fires (clamped to >= 16ms).
   setUpdateInterval: (ms: number) -> (),
