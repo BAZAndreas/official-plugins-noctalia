@@ -378,8 +378,11 @@ declare panel: {
 --   function onClick() / onRightClick() end     -- shortcut, bar widget
 --   function onMiddleClick() end                -- bar widget (see "Gestures" below)
 --   function onHover(entered) end               -- bar widget pointer enter / leave
---   function onScroll(axis, steps) end          -- bar widget scroll; axis is "vertical" | "horizontal",
---                                               -- steps is whole wheel detents (negative = up / left)
+--   function onScroll(axis, steps, startsGesture) end -- bar widget scroll; axis is "vertical" | "horizontal",
+--                                               -- steps is whole wheel detents (negative = up / left).
+--                                               -- startsGesture is true only on the first step of a flick
+--                                               -- in that direction: check it to step a list once per
+--                                               -- flick, ignore it to ramp a value per notch.
 --   function onQuery(text) / onActivate(id) end -- launcher provider
 --   function onFrameTick(deltaMs) end           -- continuous animation (setNeedsFrameTick)
 --   function onAudioSpectrum(valuesCsv, stateCsv) end -- audio-reactive bar widget
