@@ -13,7 +13,8 @@
 --   noctalia.getConfig(key)            per-widget styling (color, progress bar)
 --   noctalia.state.set(key, value)     send commands to the service
 --   noctalia.state.watch(key, fn)      react to state changes
---   button onClick = "name"            calls the plugin global of that name
+--   button onClick = "name"            calls a plugin global
+--   button onClick = function() end     calls a render-scoped closure (plugin_api >= 9)
 
 local color = noctalia.getConfig("color")
 local showProgress = noctalia.getConfig("show_progress")

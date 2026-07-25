@@ -45,7 +45,6 @@ local thumbPaths = {} -- id -> cache file path
 local thumbPending = {} -- id -> true while downloading
 local thumbQueue = {} -- wallpapers waiting for a download slot
 local thumbActive = 0
-local pickSlots = {} -- slot index -> wallpaper id for the current render
 
 local render
 local fetchWallpapers
@@ -404,12 +403,9 @@ local function queueThumbDownload(wallpaper)
   pumpThumbQueue()
 end
 
-local function onPickAt(index)
-  local id = pickSlots[index]
-  if id ~= nil then
-    selectedId = id
-    applyWallpaper(id)
-  end
+local function pickWallpaper(id)
+  selectedId = id
+  applyWallpaper(id)
 end
 
 local function fileExtension(wallpaper)
@@ -612,10 +608,12 @@ local function tileBorder(wallpaper, selected)
   return "outline", TILE_BORDER_SFW
 end
 
-local function wallpaperPreview(wallpaper, slotIndex, frameWidth, frameHeight, borderColor, borderWidth)
+local function wallpaperPreview(wallpaper, frameWidth, frameHeight, borderColor, borderWidth)
   local id = wallpaper.id
   local thumb = thumbPaths[id]
-  local onClick = `onPick{slotIndex}`
+  local onClick = function()
+    pickWallpaper(id)
+  end
   if thumb ~= nil then
     return ui.image({
       width = frameWidth,
@@ -639,21 +637,19 @@ local function wallpaperPreview(wallpaper, slotIndex, frameWidth, frameHeight, b
   })
 end
 
-local function wallpaperTile(wallpaper, slotIndex)
+local function wallpaperTile(wallpaper)
   local id = wallpaper.id
   local resolution = wallpaper.resolution or id
   local selected = selectedId == id
   local borderColor, borderWidth = tileBorder(wallpaper, selected)
   local frameWidth, frameHeight = tileThumbSize()
-  pickSlots[slotIndex] = id
-
   return ui.column({
     gap = TILE_LABEL_GAP,
     key = id,
     flexGrow = 1,
     align = "center",
   }, {
-    wallpaperPreview(wallpaper, slotIndex, frameWidth, frameHeight, borderColor, borderWidth),
+    wallpaperPreview(wallpaper, frameWidth, frameHeight, borderColor, borderWidth),
     ui.label({
       text = resolution,
       fontSize = TILE_LABEL_FONT,
@@ -678,9 +674,9 @@ local function wallpaperGrid()
 
   local rows = {}
   local row = {}
-  for slotIndex, wallpaper in ipairs(wallpapers) do
-    table.insert(row, wallpaperTile(wallpaper, slotIndex - 1))
-    if #row == COLUMNS or slotIndex == #wallpapers then
+  for index, wallpaper in ipairs(wallpapers) do
+    table.insert(row, wallpaperTile(wallpaper))
+    if #row == COLUMNS or index == #wallpapers then
       table.insert(rows, ui.row({ gap = COLUMN_GAP, align = "stretch" }, row))
       row = {}
     end
@@ -690,7 +686,6 @@ end
 
 render = function()
   normalizePurityFilters()
-  pickSlots = {}
   local pageLabel = if applying then tr("applying") else `Page {page} / {totalPages}`
   panel.render(ui.column({ flexGrow = 1, gap = 12, align = "stretch" }, {
     ui.row({ align = "center", justify = "space_between", gap = 8 }, {
@@ -886,29 +881,3 @@ end
 function onCloseClicked()
   panel.close()
 end
-
--- Wallhaven returns at most 24 wallpapers per page; each slot gets a fixed callback name.
-function onPick0() onPickAt(0) end
-function onPick1() onPickAt(1) end
-function onPick2() onPickAt(2) end
-function onPick3() onPickAt(3) end
-function onPick4() onPickAt(4) end
-function onPick5() onPickAt(5) end
-function onPick6() onPickAt(6) end
-function onPick7() onPickAt(7) end
-function onPick8() onPickAt(8) end
-function onPick9() onPickAt(9) end
-function onPick10() onPickAt(10) end
-function onPick11() onPickAt(11) end
-function onPick12() onPickAt(12) end
-function onPick13() onPickAt(13) end
-function onPick14() onPickAt(14) end
-function onPick15() onPickAt(15) end
-function onPick16() onPickAt(16) end
-function onPick17() onPickAt(17) end
-function onPick18() onPickAt(18) end
-function onPick19() onPickAt(19) end
-function onPick20() onPickAt(20) end
-function onPick21() onPickAt(21) end
-function onPick22() onPickAt(22) end
-function onPick23() onPickAt(23) end

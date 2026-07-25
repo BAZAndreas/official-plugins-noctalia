@@ -8,7 +8,7 @@ local PANEL_WIDTH = 920
 local PANEL_PADDING = 28
 local COLUMNS = 4
 local COLUMN_GAP = 12
-local PAGE_SIZE = 24 -- one fixed onPick callback per slot below
+local PAGE_SIZE = 24
 local THUMB_MAX_CONCURRENT = 4
 local TILE_RADIUS = 12
 local VIDEO_EXTENSIONS = { mp4 = true, webm = true, mkv = true, mov = true, gif = true }
@@ -26,7 +26,6 @@ local thumbPaths = {}   -- path -> relative cache path (ready)
 local thumbPending = {} -- path -> true while generating
 local thumbQueue = {}
 local thumbActive = 0
-local pickSlots = {}    -- slot index -> video path for the current render
 
 local render
 
@@ -274,12 +273,14 @@ local function isAssignedToSelection(path)
   return assignmentFor(selectedConnectorName) == path
 end
 
-local function videoTile(video, slotIndex)
+local function videoTile(video)
   local frameWidth, frameHeight = tileSize()
-  pickSlots[slotIndex] = video.path
-  local selected = isAssignedToSelection(video.path)
-  local thumb = thumbPaths[video.path]
-  local onClick = `onPick{slotIndex}`
+  local path = video.path
+  local selected = isAssignedToSelection(path)
+  local thumb = thumbPaths[path]
+  local onClick = function()
+    applyVideo(path)
+  end
 
   local preview
   if thumb ~= nil then
@@ -327,10 +328,8 @@ local function videoGrid()
   local last = math.min(first + PAGE_SIZE - 1, #videos)
   local rows = {}
   local row = {}
-  local slot = 0
   for i = first, last do
-    table.insert(row, videoTile(videos[i], slot))
-    slot += 1
+    table.insert(row, videoTile(videos[i]))
     if #row == COLUMNS or i == last then
       table.insert(rows, ui.row({ gap = COLUMN_GAP, align = "stretch" }, row))
       row = {}
@@ -340,7 +339,6 @@ local function videoGrid()
 end
 
 render = function()
-  pickSlots = {}
   refreshAvailability()
   refreshOutputs()
   local options = outputOptions()
@@ -457,35 +455,3 @@ end)
 noctalia.state.watch("paused", function(_)
   render()
 end)
-
-local function onPickAt(slot)
-  local path = pickSlots[slot]
-  if path ~= nil then
-    applyVideo(path)
-  end
-end
-
-function onPick0() onPickAt(0) end
-function onPick1() onPickAt(1) end
-function onPick2() onPickAt(2) end
-function onPick3() onPickAt(3) end
-function onPick4() onPickAt(4) end
-function onPick5() onPickAt(5) end
-function onPick6() onPickAt(6) end
-function onPick7() onPickAt(7) end
-function onPick8() onPickAt(8) end
-function onPick9() onPickAt(9) end
-function onPick10() onPickAt(10) end
-function onPick11() onPickAt(11) end
-function onPick12() onPickAt(12) end
-function onPick13() onPickAt(13) end
-function onPick14() onPickAt(14) end
-function onPick15() onPickAt(15) end
-function onPick16() onPickAt(16) end
-function onPick17() onPickAt(17) end
-function onPick18() onPickAt(18) end
-function onPick19() onPickAt(19) end
-function onPick20() onPickAt(20) end
-function onPick21() onPickAt(21) end
-function onPick22() onPickAt(22) end
-function onPick23() onPickAt(23) end

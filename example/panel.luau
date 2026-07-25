@@ -10,8 +10,9 @@
 --   panel.close()                   ask the host to close this panel
 --   noctalia.getConfig(key)         settings (seeded from the manifest)
 --   noctalia.openColorPicker(...)   open the native color picker asynchronously
---   button/toggle/slider/...        onClick / onChange call the plugin global of
---                                   that name; values arrive as string args
+--   button/toggle/slider/...        onClick / onChange accept a closure or the
+--                                   name of a plugin global; values arrive as
+--                                   string args
 --
 -- Layout notes:
 --   * a Flex (column/row/scroll) centers its children on the cross axis by

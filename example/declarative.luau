@@ -21,7 +21,17 @@ local function render()
     ui.row({ fill = "secondary/0.25", radius = 8, paddingH = 6, align = "center" }, {
       ui.label({ text = tostring(tick), color = "secondary", fontWeight = "bold" }),
     }),
-    ui.button({ glyph = "plus", glyphSize = 12, variant = "ghost", onClick = "onPlus" }),
+    -- Function-valued callbacks (plugin_api >= 9) are render-scoped closures.
+    -- They can capture local state directly without defining a plugin global.
+    ui.button({
+      glyph = "plus",
+      glyphSize = 12,
+      variant = "ghost",
+      onClick = function()
+        clicks += 1
+        noctalia.notify(noctalia.tr("title"), noctalia.trp("clicks", clicks))
+      end,
+    }),
   }))
 end
 
@@ -34,10 +44,4 @@ end)
 function update()
   noctalia.setUpdateInterval(1000)
   render()
-end
-
--- Inner-control callback: fires only when the ui.button is clicked.
-function onPlus()
-  clicks += 1
-  noctalia.notify(noctalia.tr("title"), noctalia.trp("clicks", clicks))
 end
