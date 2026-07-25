@@ -275,7 +275,7 @@ declare barWidget: {
 --   entry = "my-widget.luau"
 --
 --   [widget.actions]
---   middle = "exec playerctl pause"
+--   middle = "media toggle"
 --
 -- Middle click is the one to know about: every widget gets a built-in
 -- `middle = "settings-open-widget"` default, so onMiddleClick does NOT fire out
