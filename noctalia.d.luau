@@ -279,7 +279,7 @@ declare barWidget: {
 --
 -- Middle click is the one to know about: every widget gets a built-in
 -- `middle = "settings-open-widget"` default, so onMiddleClick does NOT fire out
--- of the box. Binding middle to an action does not help either — the action runs
+-- of the box. Binding middle to an action does not help either - the action runs
 -- instead of your callback. What frees the button is binding it to nothing:
 --
 --   [widget.actions]
