@@ -96,13 +96,32 @@ export type NoctaliaString = {
 }
 
 export type SystemStats = {
+  -- Unix epoch milliseconds for the latest aggregate sample. Plugin API 16.
+  sampledAtMs: number?,
   -- Absent sensors are nil rather than 0, so "no probe" is distinguishable from "idle".
   cpu: { usagePercent: number, tempC: number? },
   ram: { usagePercent: number, usedMb: number, totalMb: number },
   swap: { usedMb: number, totalMb: number },
   gpu: { tempC: number?, usagePercent: number?, vramUsedBytes: number?, vramTotalBytes: number? },
-  net: { rxBytesPerSec: number, txBytesPerSec: number },
+  net: {
+    rxBytesPerSec: number,
+    txBytesPerSec: number,
+    interfaces: { [string]: { rxBytesPerSec: number, txBytesPerSec: number } },
+  },
   loadAvg: { number }, -- 1, 5 and 15 minute averages
+}
+
+export type DiskMount = {
+  path: string,
+  source: string,
+  filesystem: string,
+}
+
+export type DiskStats = {
+  usagePercent: number,
+  totalBytes: number,
+  freeBytes: number,
+  availableBytes: number,
 }
 
 export type Noctalia = {
@@ -162,14 +181,20 @@ export type Noctalia = {
   -- whole-second, so this is the only sub-second clock. Plugin API 12.
   nowMs: () -> number,
 
-  -- System monitor. Both return nil when [system.monitor] is disabled. Plugin API 12.
-  -- systemStats reads a snapshot and enables nothing on its own.
+  -- System monitor. systemStats and cpuCores return nil when [system.monitor] is disabled.
+  -- The first systemStats call opts this plugin into its optional CPU/GPU probes.
   systemStats: () -> SystemStats?,
   -- Per-core usage in /proc/stat order, nil until the first delta lands (up to a second
   -- after the first call). The first call opts this plugin into per-core sampling, which
   -- costs one extra /proc/stat read per second while it stays loaded. Offline cores are
   -- absent from /proc/stat, so the length can change and an index is not a core id.
   cpuCores: () -> { number }?,
+  -- Physical block-device-backed filesystems, deduped by source and sorted by mount path.
+  -- Pseudo filesystems, loop/squashfs mounts and boot mounts are excluded. Plugin API 16.
+  diskMounts: () -> { DiskMount },
+  -- Latest statvfs snapshot for an absolute or ~/ path. The first call retains each valid
+  -- path for sampling until the plugin unloads. Nil when unavailable. Plugin API 16.
+  diskStats: (path: string) -> DiskStats?,
 
   -- Tick rate: how often update() fires (clamped to >= 16ms).
   setUpdateInterval: (ms: number) -> (),
