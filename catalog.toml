@@ -85,8 +85,8 @@ tags = ["countdown", "utility"]
 [[plugin]]
 id = "noctalia/wallhaven"
 name = "Wallhaven"
-version = "1.0.9"
-updated_at = 1784946285
+version = "1.0.10"
+updated_at = 1785108641
 added_at = 1782324517
 author = "noctalia"
 license = "MIT"
@@ -134,8 +134,8 @@ tags = ["emoticon", "launcher"]
 [[plugin]]
 id = "noctalia/notes"
 name = "Notes"
-version = "1.0.2"
-updated_at = 1784946285
+version = "1.0.3"
+updated_at = 1785108641
 added_at = 1783038137
 author = "noctalia"
 license = "MIT"
