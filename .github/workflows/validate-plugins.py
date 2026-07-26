@@ -171,6 +171,7 @@ SETTING_FIELDS = {
     "description_key",
     "default",
     "options",
+    "extensions",
     "min",
     "max",
     "step",
@@ -1103,6 +1104,17 @@ class Validator:
 
             self.validate_int_bounds(manifest_path, context, setting)
             self.validate_visible_when(manifest_path, context, setting.get("visible_when"))
+
+            if "extensions" in setting:
+                if setting_type != "file":
+                    self.add_context_error(manifest_path, context, "extensions is only valid for file settings")
+                self.validate_string_list(
+                    manifest_path,
+                    context,
+                    "extensions",
+                    setting["extensions"],
+                    allow_empty=True,
+                )
 
             if "advanced" in setting and not isinstance(setting["advanced"], bool):
                 self.add_context_error(manifest_path, context, "advanced must be a bool")
