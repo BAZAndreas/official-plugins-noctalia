@@ -141,6 +141,10 @@ export type Noctalia = {
   -- Panels.
   togglePanel: (panelId: string) -> (), -- "author/plugin:panel"
 
+  -- Open the settings window at this plugin's own settings, closing any open panel.
+  -- Does nothing when the plugin declares no settings. Requires plugin_api >= 15.
+  openSettings: () -> (),
+
   -- Dialogs. The callback receives the selected canonical #RRGGBB color, or nil
   -- when the dialog is cancelled.
   openColorPicker: (initialColor: string, onClose: (color: string?) -> ()) -> boolean,
