@@ -395,6 +395,7 @@ declare panel: {
   render: (tree: UiNode) -> (),
   close: () -> (),
   setWantsSecondTicks: (wants: boolean) -> (),
+  setNeedsFrameTick: (needs: boolean) -> (),
 }
 
 -- ── Entry-point callbacks ────────────────────────────────────────────────────
@@ -413,7 +414,8 @@ declare panel: {
 --                                               -- in that direction: check it to step a list once per
 --                                               -- flick, ignore it to ramp a value per notch.
 --   function onQuery(text) / onActivate(id) end -- launcher provider
---   function onFrameTick(deltaMs) end           -- continuous animation (setNeedsFrameTick)
+--   function onFrameTick(deltaMs) end           -- desktop widget, or open panel (API 18+); continuous
+--                                               -- animation, after setNeedsFrameTick(true)
 --   function onAudioSpectrum(valuesCsv, stateCsv) end -- audio-reactive bar widget
 --   function onOpen(context) / onClose() end    -- panel lifecycle
 --   function onKey(chord, pressed) end          -- panel: a capture_keys chord, verbatim from the
