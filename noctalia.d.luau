@@ -419,7 +419,9 @@ declare panel: {
 --   function onKey(chord, pressed) end          -- panel: a capture_keys chord, verbatim from the
 --                                               -- manifest; pressed is true on press, false on release
 --   function onConfigChanged() end              -- service: plugin settings changed; getConfig() now returns new values
---   function onExit(signal) end                  -- any entry teardown (0 normally, 2 for SIGINT, 15 for SIGTERM)
+--   function onEnable() end                     -- service: plugin explicitly enabled successfully (API 17+)
+--   function onExit(signal, reason) end          -- any entry teardown; signal is 0 normally, 2 for SIGINT, 15 for SIGTERM
+--                                               -- reason is "reload" | "disable" | "uninstall" | "shutdown" (API 17+)
 --
 -- These are intentionally NOT declared here: declaring them as globals makes
 -- luau-lsp treat your definition as overwriting a built-in.
