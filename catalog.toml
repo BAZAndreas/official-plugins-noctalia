@@ -152,8 +152,8 @@ rev = "5082ed5f85e795513b8485e4cedc66d5a2c816ff"
 [[plugin]]
 id = "noctalia/bitwarden"
 name = "Bitwarden"
-version = "1.0.0"
-updated_at = 1784735852
+version = "1.0.1"
+updated_at = 1785242138
 added_at = 1784735852
 author = "noctalia"
 license = "MIT"
