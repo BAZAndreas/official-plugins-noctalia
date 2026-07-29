@@ -171,12 +171,12 @@ tags = ["launcher", "privacy", "productivity", "utility"]
 [[plugin]]
 id = "noctalia/world_clock"
 name = "World Clock"
-version = "1.0.0"
-updated_at = 1785325491
+version = "1.0.1"
+updated_at = 1785330996
 added_at = 1785325491
 author = "noctalia"
 license = "MIT"
 icon = "world"
 description = "A world clock panel and bar widget for tracking multiple timezones."
 plugin_api = 19
-tags = ["clock", "timezone", "utility"]
+tags = ["clock", "time", "utility"]
