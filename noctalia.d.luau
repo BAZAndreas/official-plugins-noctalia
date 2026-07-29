@@ -176,7 +176,10 @@ export type Noctalia = {
   clipboardText: () -> string?, -- latest text clipboard content (nil when empty or non-text)
   getenv: (name: string) -> string?,
   expandPath: (path: string) -> string,
-  formatTime: (pattern: string, unixSeconds: number?) -> string,
+  formatTime: (pattern: string, unixSeconds: number?, timezone: string?) -> string,
+  -- True when `name` is empty (system local) or names a zone in the active timezone database.
+  -- Plugin API 19.
+  isValidTimezone: (name: string) -> boolean,
   -- Wall-clock milliseconds since the Unix epoch. formatTime and os.time are both
   -- whole-second, so this is the only sub-second clock. Plugin API 12.
   nowMs: () -> number,
