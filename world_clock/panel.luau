@@ -87,10 +87,10 @@ local function render()
         rows,
         ui.row({
           key = "zone-" .. id,
-          gap = 8,
+          gap = 6,
           align = "center",
-          paddingV = 5,
-          paddingH = 8,
+          paddingV = 3,
+          paddingH = 6,
           fill = "surface_variant/0.35",
           radius = 6,
         }, {
@@ -123,14 +123,14 @@ local function render()
     table.insert(rows, insertionZone(#zones + 1))
   end
 
-  panel.render(ui.column({ flexGrow = 1, gap = 10, padding = 14 }, {
+  panel.render(ui.column({ flexGrow = 1, gap = 8, padding = 8 }, {
     ui.row({ align = "center", justify = "space_between" }, {
       ui.label({ text = noctalia.tr("title"), fontSize = 16, fontWeight = "bold", flexGrow = 1 }),
       ui.button({ glyph = "close", onClick = function()
         panel.close()
       end }),
     }),
-    ui.row({ gap = 8, align = "center" }, {
+    ui.row({ gap = 6, align = "center" }, {
       ui.input({
         key = "add-" .. draftKey,
         value = draft,

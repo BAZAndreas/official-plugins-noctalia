@@ -177,6 +177,9 @@ export type Noctalia = {
   getenv: (name: string) -> string?,
   expandPath: (path: string) -> string,
   formatTime: (pattern: string, unixSeconds: number?, timezone: string?) -> string,
+  -- [shell].time_format / date_format (e.g. "{:%H:%M}", "%A, %x"). Plugin API 19.
+  timeFormat: () -> string,
+  dateFormat: () -> string,
   -- True when `name` is empty (system local) or names a zone in the active timezone database.
   -- Plugin API 19.
   isValidTimezone: (name: string) -> boolean,

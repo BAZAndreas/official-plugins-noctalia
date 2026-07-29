@@ -9,7 +9,7 @@ plugin_api = 19
 author = "noctalia"
 license = "MIT"
 dependencies = []
-tags = ["clock", "timezone", "utility"]
+tags = ["clock", "time", "utility"]
 icon = "world"
 description = "A world clock panel and bar widget for tracking multiple timezones."
 
@@ -20,8 +20,8 @@ entry = "bar.luau"
 [[panel]]
 id = "panel"
 entry = "panel.luau"
-width = 360
-height = 520
+width = 340
+height = 342
 placement = "attached"
 position = "auto"
 open_near_click = true

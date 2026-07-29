@@ -51,5 +51,5 @@ noctalia msg plugin noctalia/world_clock:service all clear
 
 ## Notes
 
-Requires `plugin_api = 19` for `noctalia.formatTime(..., timezone)` and
-`noctalia.isValidTimezone()`.
+Requires `plugin_api = 19` for timezone formatting and `noctalia.timeFormat()` /
+`noctalia.isValidTimezone()`. Display times follow `[shell].time_format`.

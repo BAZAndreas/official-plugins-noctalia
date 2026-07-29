@@ -9,7 +9,6 @@
 noctalia.setUpdateInterval(1000)
 
 local DEFAULT_ZONES = { "UTC", "America/New_York", "Europe/Berlin", "Asia/Tokyo" }
-local FORMAT = "%H:%M"
 
 local zones = {} -- ordered list of IANA ids
 
@@ -78,11 +77,12 @@ end
 
 local function publish()
   local rows = {}
+  local format = noctalia.timeFormat()
   for _, zone in ipairs(zones) do
     table.insert(rows, {
       id = zone,
       label = shortLabel(zone),
-      time = noctalia.formatTime(FORMAT, nil, zone),
+      time = noctalia.formatTime(format, nil, zone),
       offset = noctalia.formatTime("%z", nil, zone),
     })
   end
