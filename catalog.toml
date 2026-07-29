@@ -1,11 +1,12 @@
 # This file is auto-generated. Do not edit manually.
 # Do not include it in your commit.
-# Official Noctalia plugins catalog.
+# Noctalia plugins catalog.
 # Index of every plugin this source ships: the minimum needed to render, search,
 # and compat-check the list. The per-plugin plugin.toml stays authoritative; the
 # host re-reads it on enable. Keep one [[plugin]] row per plugin subdirectory.
 # A [[plugin.release]] row names an older revision for a Noctalia below the tip's
 # plugin_api, so an older release stays installable instead of the plugin vanishing.
+# On every row, updated_at dates the commit that first shipped that row's version.
 
 [[plugin]]
 id = "noctalia/example"
@@ -23,11 +24,13 @@ tags = ["demo"]
 [[plugin.release]]
 plugin_api = 5
 version = "1.3.0"
+updated_at = 1784513738
 rev = "2cdb0763567d53067205c4342bafff9010a45cda"
 
 [[plugin.release]]
 plugin_api = 3
 version = "1.2.2"
+updated_at = 1784171108
 rev = "5082ed5f85e795513b8485e4cedc66d5a2c816ff"
 
 [[plugin]]
@@ -60,7 +63,7 @@ tags = ["fun", "animation"]
 id = "noctalia/translator"
 name = "Translator"
 version = "1.0.5"
-updated_at = 1784208593
+updated_at = 1782649932
 added_at = 1781268478
 author = "noctalia"
 license = "MIT"
@@ -98,6 +101,7 @@ tags = ["wallpaper"]
 [[plugin.release]]
 plugin_api = 3
 version = "1.0.8"
+updated_at = 1784290655
 rev = "71baaa6ce6f0bfa093257dd0bedc7f39269a0650"
 
 [[plugin]]
@@ -116,13 +120,14 @@ tags = ["wallpaper", "video"]
 [[plugin.release]]
 plugin_api = 3
 version = "1.0.6"
+updated_at = 1784299657
 rev = "487c0288adf0d1e6f72ba96e9e2499596521249c"
 
 [[plugin]]
 id = "noctalia/kaomoji"
 name = "Kaomoji"
 version = "1.0.1"
-updated_at = 1784208593
+updated_at = 1782703256
 added_at = 1782513915
 author = "noctalia"
 license = "MIT"
@@ -147,6 +152,7 @@ tags = ["productivity"]
 [[plugin.release]]
 plugin_api = 3
 version = "1.0.1"
+updated_at = 1784089345
 rev = "5082ed5f85e795513b8485e4cedc66d5a2c816ff"
 
 [[plugin]]
