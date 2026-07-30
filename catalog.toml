@@ -171,8 +171,8 @@ tags = ["launcher", "privacy", "productivity", "utility"]
 [[plugin]]
 id = "noctalia/world_clock"
 name = "World Clock"
-version = "1.0.1"
-updated_at = 1785330996
+version = "1.0.2"
+updated_at = 1785397425
 added_at = 1785325491
 author = "noctalia"
 license = "MIT"
