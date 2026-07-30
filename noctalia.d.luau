@@ -95,6 +95,17 @@ export type NoctaliaString = {
   urlDecode: (s: string) -> string,
 }
 
+export type NoctaliaSound = {
+  -- Paths resolve like filesystem APIs: ~ through $HOME, absolute paths unchanged,
+  -- and other paths relative to the plugin directory. The return value means the
+  -- request was accepted, not that decoding succeeded. At most eight loads may be
+  -- pending; a duplicate pending name returns false. Accepted callbacks are cancelled
+  -- when this runtime reloads or stops.
+  load: (name: string, path: string, onLoaded: (ok: boolean, error: string?) -> ()) -> boolean,
+  -- Names belong to this runtime instance and are released when it reloads or stops.
+  play: (name: string) -> (),
+}
+
 export type SystemStats = {
   -- Unix epoch milliseconds for the latest aggregate sample. Plugin API 16.
   sampledAtMs: number?,
@@ -250,6 +261,7 @@ export type Noctalia = {
   getConfig: (key: string) -> any, -- string | number | boolean | {string} | {[string]: string} | nil
 
   state: NoctaliaState,
+  sound: NoctaliaSound,
   json: NoctaliaJson,
   string: NoctaliaString,
 }
