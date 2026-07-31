@@ -30,7 +30,7 @@ export type HttpRequest = {
   basic_password: string?,
   follow_redirects: boolean?,
   -- Disables origin certificate and hostname verification. Defaults to false.
-  -- Use only for explicitly trusted endpoints. Requires plugin_api >= 7.
+  -- Use only for explicitly trusted endpoints.
   allow_insecure_tls: boolean?,
 }
 
@@ -172,7 +172,7 @@ export type Noctalia = {
   togglePanel: (panelId: string) -> (), -- "author/plugin:panel"
 
   -- Open the settings window at this plugin's own settings, closing any open panel.
-  -- Does nothing when the plugin declares no settings. Requires plugin_api >= 15.
+  -- Does nothing when the plugin declares no settings.
   openSettings: () -> (),
 
   -- Dialogs. The callback receives the selected canonical #RRGGBB color, or nil
@@ -246,8 +246,7 @@ export type Noctalia = {
   -- trimmed); onClose fires exactly once when the transfer ends, unless the
   -- stream was stopped via the handle. Non-2xx responses are not special-cased:
   -- their body streams to onLine and the status arrives in onClose. Streams are
-  -- cancelled on script reload. Requires plugin_api >= 4. Returns nil when the
-  -- stream could not be started.
+  -- cancelled on script reload. Returns nil when the stream could not be started.
   httpStream: (
     req: HttpRequest,
     onLine: (line: string) -> (),
@@ -257,7 +256,6 @@ export type Noctalia = {
 
   fuzzyScore: (pattern: string, text: string) -> number?, -- nil if no match
 
-  -- String maps ({[string]: string}) require plugin_api >= 6.
   getConfig: (key: string) -> any, -- string | number | boolean | {string} | {[string]: string} | nil
 
   state: NoctaliaState,
@@ -353,9 +351,9 @@ declare shortcut: {
 
 type UiCtor = (props: { [string]: any }?, children: { UiNode }?) -> UiNode
 
--- Pointer props take a function (plugin_api >= 9) or the name of a global
--- function in your script. onClick is accepted by row, column, box, image and
--- button (button also takes onRightClick); the handler takes no arguments.
+-- Pointer props take a function or the name of a global function in your script.
+-- onClick is accepted by row, column, box, image, and button (button also takes
+-- onRightClick); the handler takes no arguments.
 -- onHover is accepted by the same five and makes the node a hover target: the
 -- handler receives (state, key), where state is "true" on enter and "false" on
 -- leave, and key is the node's key prop ("" when it has none), so one named
@@ -371,6 +369,7 @@ declare ui: {
   row: UiCtor,
   box: UiCtor,
   label: UiCtor,
+  markdown: UiCtor,
   glyph: UiCtor,
   image: UiCtor,
   separator: UiCtor,
@@ -383,7 +382,7 @@ declare ui: {
   slider: UiCtor,
   toggle: UiCtor,
   scroll: UiCtor,
-  -- Drag and drop (plugin panels only, plugin_api >= 5). dragSource props:
+  -- Drag and drop (plugin panels only). dragSource props:
   -- dragType/payload (required strings), enabled, tooltip, previewAncestor
   -- (0-8), liftFromLayout. dropZone props: accepts (string array), value,
   -- onDrop (required), direction, enabled, expandOnDrag, hitSlop. The onDrop
