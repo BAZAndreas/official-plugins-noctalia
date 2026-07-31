@@ -76,6 +76,8 @@ export type LauncherResult = {
   score: number?,
 }
 
+-- Noctalia provides Luau's built-in `require(path: string): any` for explicit relative `.luau` modules.
+
 -- ── noctalia.* — shared across every entry type ──────────────────────────────
 
 export type NoctaliaState = {
