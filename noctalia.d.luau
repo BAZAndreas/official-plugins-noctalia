@@ -220,6 +220,7 @@ export type Noctalia = {
 
   -- Filesystem (paths resolve ~ -> $HOME, absolute verbatim, else plugin-relative).
   readFile: (path: string) -> (string?, string?), -- contents, or (nil, err)
+  readFileAsync: (path: string, onResult: (contents: string?, err: string?) -> ()) -> boolean,
   writeFile: (path: string, contents: string) -> (boolean, string?),
   mkdirAll: (path: string) -> (boolean, string?), -- like mkdir -p; existing dir is success
   removeFile: (path: string) -> (boolean, string?), -- files only, refuses directories
