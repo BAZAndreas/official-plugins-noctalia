@@ -112,7 +112,7 @@ export type SystemStats = {
   -- Unix epoch milliseconds for the latest aggregate sample. Plugin API 16.
   sampledAtMs: number?,
   -- Absent sensors are nil rather than 0, so "no probe" is distinguishable from "idle".
-  cpu: { usagePercent: number, tempC: number? },
+  cpu: { usagePercent: number, tempC: number?, freqMhz: number?, maxFreqMhz: number? },
   ram: { usagePercent: number, usedMb: number, totalMb: number },
   swap: { usedMb: number, totalMb: number },
   gpu: { tempC: number?, usagePercent: number?, vramUsedBytes: number?, vramTotalBytes: number? },
