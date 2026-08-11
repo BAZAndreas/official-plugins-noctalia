@@ -140,10 +140,12 @@ export type DiskStats = {
 export type Noctalia = {
   log: (msg: string) -> (),
 
-  -- Subprocess. With no callback, runAsync is a detached fire-and-forget launch.
-  -- With a callback it runs async and delivers a CommandResult; timeoutMs is
-  -- clamped to [50, 60000].
-  runAsync: (cmd: string, onResult: ((result: CommandResult) -> ())?, timeoutMs: number?) -> boolean,
+  -- Subprocess. A string runs through /bin/sh -c; an argv table executes the
+  -- program directly, so dynamic values remain single arguments. With no
+  -- callback, runAsync is a detached fire-and-forget launch. With a callback
+  -- it delivers a CommandResult; timeoutMs is clamped to [50, 60000].
+  -- The argv-table form requires plugin_api >= 24.
+  runAsync: (cmdOrArgv: string | { string }, onResult: ((result: CommandResult) -> ())?, timeoutMs: number?) -> boolean,
   runStream: (cmd: string, onLine: (line: string) -> ()) -> boolean,
   runInTerminal: (cmd: string) -> boolean,
   commandExists: (name: string) -> boolean,
