@@ -60,6 +60,11 @@ export type Output = {
   focused: boolean,
 }
 
+export type WallpaperMask = {
+  path: string,
+  wallpaperPath: string,
+}
+
 -- A tooltip row: { key, value } or the positional array form { key, value }.
 export type TooltipRow = { key: string?, value: string? }
 
@@ -159,6 +164,7 @@ export type Noctalia = {
   focusedOutputName: () -> string?,
   outputs: () -> { Output },
   isDarkMode: () -> boolean,
+  offlineMode: () -> boolean,
 
   -- App icons. Resolves an app id (desktop-entry id / StartupWMClass) — or a
   -- raw icon name when no entry matches — to an icon file path via the host's
@@ -171,6 +177,10 @@ export type Noctalia = {
   setWallpaperEnabled: (connector: string, enabled: boolean) -> (),
   setWallpaper: (connectorOrPath: string, path: string?) -> (),
   wallpaperDirectory: () -> string?,
+  -- Source-aligned output mask. 0 keeps desktop widgets visible; 255 erases
+  -- them to reveal the wallpaper. Requires plugin_api >= 25.
+  wallpaperPath: (connector: string) -> string?,
+  setWallpaperMask: (connector: string, mask: WallpaperMask?) -> (),
 
   -- Panels.
   togglePanel: (panelId: string) -> (), -- "author/plugin:panel"
