@@ -184,12 +184,18 @@ tags = ["clock", "time", "utility"]
 [[plugin]]
 id = "noctalia/wallpaper_depth"
 name = "Wallpaper Depth"
-version = "1.0.0"
-updated_at = 1786549052
+version = "1.0.1"
+updated_at = 1786564757
 added_at = 1786549052
 author = "noctalia"
 license = "MIT"
 icon = "layers-subtract"
 description = "Generate depth masks that place desktop widgets behind wallpaper foregrounds."
-plugin_api = 25
+plugin_api = 26
 tags = ["wallpaper", "desktop", "ai"]
+
+[[plugin.release]]
+plugin_api = 25
+version = "1.0.0"
+updated_at = 1786549052
+rev = "4933b1c459459af3a0f9d14898b76ce0564d43b3"
