@@ -102,9 +102,6 @@ local function setupCard()
     if status.pythonAvailable ~= true then
       table.insert(prerequisites, "python3")
     end
-    if status.uvAvailable ~= true then
-      table.insert(prerequisites, "uv")
-    end
     if #prerequisites > 0 then
       table.insert(children, ui.label({
         text = tr("panel.setup.prerequisites", { commands = table.concat(prerequisites, ", ") }),
@@ -134,7 +131,6 @@ local function setupCard()
       enabled = state ~= "running"
         and status.offline ~= true
         and status.pythonAvailable == true
-        and status.uvAvailable == true
         and status.busy ~= true,
       onClick = "onSetup",
     }))

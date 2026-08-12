@@ -21,7 +21,6 @@ local outputs = {}
 local lastParametersKey = nil
 local lastAutoGenerate = nil
 local pythonAvailable = noctalia.commandExists("python3")
-local uvAvailable = noctalia.commandExists("uv")
 
 local function decodeObject(raw)
   if type(raw) ~= "string" or raw == "" then
@@ -90,7 +89,6 @@ local function publish()
     busy = setupState == "running" or activeJob ~= nil or cacheOperation,
     offline = noctalia.getSetting("shell.offline_mode"),
     pythonAvailable = pythonAvailable,
-    uvAvailable = uvAvailable,
     modelSize = MODEL_SIZE,
     threshold = params ~= nil and params.threshold or 0,
     feather = params ~= nil and params.feather or 0,
@@ -307,8 +305,8 @@ local function startSetup()
     setSetupState("error", noctalia.tr("service.offline"))
     return
   end
-  if not pythonAvailable or not uvAvailable then
-    setSetupState("error", noctalia.tr("service.prerequisites"))
+  if not pythonAvailable then
+    setSetupState("error", noctalia.tr("service.python_missing"))
     return
   end
   if activeJob ~= nil or cacheOperation then

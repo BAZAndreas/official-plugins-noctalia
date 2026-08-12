@@ -45,7 +45,6 @@
     "setup_missing": "The model and runtime are not installed.",
     "start_validation_failed": "Could not start setup validation.",
     "offline": "Disable shell offline mode before setup.",
-    "prerequisites": "python3 and uv are required for setup.",
     "busy": "Wait for the current operation to finish.",
     "setup_running": "Installing the runtime and downloading the 99 MB model.",
     "start_setup_failed": "Could not start setup.",

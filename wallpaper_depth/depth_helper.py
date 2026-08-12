@@ -29,10 +29,12 @@ MASK_PIPELINE_VERSION = 3
 REFINEMENT_MAX_DIMENSION = 1920
 GUIDED_FILTER_RADIUS = 8
 GUIDED_FILTER_EPSILON = 0.001
+PYTHON_MIN = (3, 11)
+PYTHON_MAX = (3, 14)
 PACKAGES = (
-    "numpy==2.2.6",
-    "onnxruntime==1.22.1",
-    "Pillow==11.3.0",
+    "numpy==2.4.2",
+    "onnxruntime==1.28.0",
+    "Pillow==12.3.0",
 )
 
 
@@ -110,19 +112,29 @@ def setup(data_dir: Path) -> None:
         operation_path,
         {"state": "running", "startedAt": int(time.time()), "modelSize": MODEL_SIZE},
     )
-    if shutil.which("uv") is None:
-        raise RuntimeError("uv is not installed")
+    python_version = sys.version_info[:2]
+    if not PYTHON_MIN <= python_version <= PYTHON_MAX:
+        raise RuntimeError("Python 3.11 through 3.14 is required")
     runtime_dir = data_dir / "runtime"
     venv = runtime_dir / ".venv"
     runtime_dir.mkdir(parents=True, exist_ok=True)
     if not runtime_ready(data_dir):
         subprocess.run(
-            ["uv", "venv", "--clear", "--python", "3.13", str(venv)],
+            [sys.executable, "-m", "venv", "--clear", str(venv)],
             stdin=subprocess.DEVNULL,
             check=True,
         )
         subprocess.run(
-            ["uv", "pip", "install", "--python", str(runtime_python(data_dir)), "--exact", *PACKAGES],
+            [
+                str(runtime_python(data_dir)),
+                "-m",
+                "pip",
+                "install",
+                "--disable-pip-version-check",
+                "--no-input",
+                "--only-binary=:all:",
+                *PACKAGES,
+            ],
             stdin=subprocess.DEVNULL,
             check=True,
         )

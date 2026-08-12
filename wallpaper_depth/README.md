@@ -16,9 +16,8 @@ Wallpapers are never uploaded.
 
 ## Requirements
 
-Install `python3` and `uv` on `PATH`; see the
-[uv installation guide](https://docs.astral.sh/uv/getting-started/installation/).
-Initial setup also requires network access and shell offline mode must be disabled.
+Install `python3` version 3.11–3.14 with `venv` and `pip` support. Initial setup
+requires network access, and shell offline mode must be disabled.
 
 From the plugin panel, setup creates an isolated Python environment in the
 plugin data directory and downloads the 99 MB Apache-2.0 Depth Anything V2
