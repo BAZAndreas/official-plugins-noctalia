@@ -180,3 +180,16 @@ icon = "world"
 description = "A world clock panel and bar widget for tracking multiple timezones."
 plugin_api = 19
 tags = ["clock", "time", "utility"]
+
+[[plugin]]
+id = "noctalia/wallpaper_depth"
+name = "Wallpaper Depth"
+version = "1.0.0"
+updated_at = 1786549052
+added_at = 1786549052
+author = "noctalia"
+license = "MIT"
+icon = "layers-subtract"
+description = "Generate depth masks that place desktop widgets behind wallpaper foregrounds."
+plugin_api = 25
+tags = ["wallpaper", "desktop", "ai"]
