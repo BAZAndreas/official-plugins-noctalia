@@ -88,7 +88,7 @@ local function publish()
     setupState = setupState,
     setupMessage = setupMessage ~= "" and setupMessage or parameterError,
     busy = setupState == "running" or activeJob ~= nil or cacheOperation,
-    offline = noctalia.offlineMode(),
+    offline = noctalia.getSetting("shell.offline_mode"),
     pythonAvailable = pythonAvailable,
     uvAvailable = uvAvailable,
     modelSize = MODEL_SIZE,
@@ -303,7 +303,7 @@ local function verifySetup()
 end
 
 local function startSetup()
-  if noctalia.offlineMode() then
+  if noctalia.getSetting("shell.offline_mode") then
     setSetupState("error", noctalia.tr("service.offline"))
     return
   end

@@ -164,7 +164,12 @@ export type Noctalia = {
   focusedOutputName: () -> string?,
   outputs: () -> { Output },
   isDarkMode: () -> boolean,
-  offlineMode: () -> boolean,
+  -- Read any effective shell config value by dotted path, e.g.
+  -- getSetting("shell.offline_mode"), getSetting("bar.main.position"),
+  -- getSetting("widget.clock"). Tables/arrays convert to Lua tables; array
+  -- indices inside the path are zero-based ("bar.order[0]"). nil when the
+  -- path matches nothing. Requires plugin_api >= 26.
+  getSetting: (path: string) -> any,
 
   -- App icons. Resolves an app id (desktop-entry id / StartupWMClass) — or a
   -- raw icon name when no entry matches — to an icon file path via the host's
